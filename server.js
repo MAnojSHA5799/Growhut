@@ -32,18 +32,18 @@ app.post('/register', async (req, res) => {
   }
 
   if (!isValidEmail(email)) {
-    return res.status(400).json({ message: "Invalid email format" });
+    return res.status(400).json({ message: "Invalid email" });
   }
 
   if (password.length < 6) {
-    return res.status(400).json({ message: "Password must be at least 6 characters long" });
+    return res.status(400).json({ message: "Password must be at least 6 characters" });
   }
 
   const users = loadUsers();
 
   const existingUser = users.find(user => user.email === email);
   if (existingUser) {
-    return res.status(409).json({ message: "Email is already registered" });
+    return res.status(409).json({ message: "Email already registered" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
